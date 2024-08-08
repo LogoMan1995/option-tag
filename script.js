@@ -1,33 +1,40 @@
-const cleverSkills = [
-    { skill: 'HTML' },
-    { skill: 'CSS' },
-    { skill: 'GIT' },
-    { skill: 'JAVASCRIPT' },
-    { skill: 'REACT' }
-];
+const dropdowns = document.querySelectorAll('.dropdown');
 
-const select = document.createElement('select');
+dropdowns.forEach(dropdown => {
+    const select = dropdown.querySelector('.select');
+    const caret = dropdown.querySelector('.caret');
+    const menu = dropdown.querySelector('.menu');
+    const options = dropdown.querySelectorAll('.menu li');
+    const selected = dropdown.querySelector('.selected');
 
-cleverSkills.forEach(item => {
-    const option = document.createElement('option');
-    option.textContent = item.skill;
-    select.append(option);
-});
+    let isOpen = false;
+    let timeoutId;
 
-document.querySelector('.selection').append(select);
+    select.addEventListener('click', () => {
 
-const selectionText = document.querySelector('.selection p');
+        caret.classList.toggle('caret-rotate');
+        if (!isOpen) {
 
-select.addEventListener('change', () => {
-    select.querySelectorAll('option').forEach(item => {
-        item.classList.remove('selected-option');
+            timeoutId = setTimeout(() => {
+                menu.classList.add('menu-open');
+                isOpen = true;
+            }, 200);
+        } else {
+
+            clearTimeout(timeoutId);
+            menu.classList.remove('menu-open');
+            isOpen = false;
+        }
+    })
+
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            selected.innerText = option.innerText;
+            caret.classList.remove('caret-rotate');
+            menu.classList.remove('menu-open');
+        });
     });
-
-    const selectedOption = select.querySelector('option:checked');
-    if (selectedOption) {
-        selectedOption.classList.add('selected-option');
-        selectionText.textContent = `Выбранный инструмент: ${selectedOption.textContent}`;
-    }
 });
+
 
 
