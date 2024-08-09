@@ -1,40 +1,29 @@
 const dropdowns = document.querySelectorAll('.dropdown');
 
-dropdowns.forEach(dropdown => {
-    const select = dropdown.querySelector('.select');
-    const caret = dropdown.querySelector('.caret');
-    const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li');
-    const selected = dropdown.querySelector('.selected');
-
-    let isOpen = false;
-    let timeoutId;
+dropdowns.forEach(item => {
+    const select = item.querySelector('.select');
+    const caret = item.querySelector('.caret');
+    const menu = item.querySelector('.menu');
+    const options = item.querySelectorAll('.menu li');
+    const selected = item.querySelector('.selected');
 
     select.addEventListener('click', () => {
-
         caret.classList.toggle('caret-rotate');
-        if (!isOpen) {
-
-            timeoutId = setTimeout(() => {
-                menu.classList.add('menu-open');
-                isOpen = true;
-            }, 200);
-        } else {
-
-            clearTimeout(timeoutId);
-            menu.classList.remove('menu-open');
-            isOpen = false;
-        }
-    })
+        menu.classList.toggle('menu-open');
+    });
 
     options.forEach(option => {
         option.addEventListener('click', () => {
-            selected.innerText = option.innerText;
-            caret.classList.remove('caret-rotate');
-            menu.classList.remove('menu-open');
+            option.classList.toggle('checked');
+            const checkedOptions = Array.from(options).filter(item => item.classList.contains('checked'));
+            if (checkedOptions.length === 0) {
+                selected.innerText = 'Choose skills';
+            } else {
+                const selectedText = checkedOptions.map(item => item.innerText).join(' , ');
+                selected.innerText = selectedText;
+            } 
+            caret.classList.toggle('caret-rotate');
+            menu.classList.toggle('menu-open');
         });
     });
 });
-
-
-
