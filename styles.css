@@ -8,7 +8,7 @@ body {
 }
 
 .dropdown {
-  min-width: 150px;
+  width: 300px;
   position: relative;
   margin: 20px;
 }
@@ -30,7 +30,6 @@ body {
   transition: 0.3s;
 
 }
-
 
 
 .select:hover {
@@ -61,7 +60,7 @@ body {
   position: absolute;
   top: 30px;
   left: 50%;
-  width: 100%;
+  width: 300px;
   transform: translateX(-50%);
   display: none;
   z-index: 1;
@@ -90,4 +89,19 @@ body {
 .menu-open {
   display: block;
   transition: 2s;
+}
+
+.menu ul {
+  display: none;
+  width: 300px;
+  position: absolute;
+  left: 300px;
+  top: 40px;
+  list-style: none;
+  background-color: blue;
+  padding: 7px 5px;
+}
+
+.menu ul.open2 {
+  display: block;
 }

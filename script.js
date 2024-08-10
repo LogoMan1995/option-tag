@@ -4,7 +4,6 @@ dropdowns.forEach(item => {
     const select = item.querySelector('.select');
     const caret = item.querySelector('.caret');
     const menu = item.querySelector('.menu');
-    const options = item.querySelectorAll('.menu li');
     const selected = item.querySelector('.selected');
 
     select.addEventListener('click', () => {
@@ -12,18 +11,28 @@ dropdowns.forEach(item => {
         menu.classList.toggle('menu-open');
     });
 
-    options.forEach(option => {
-        option.addEventListener('click', () => {
-            option.classList.toggle('checked');
-            const checkedOptions = Array.from(options).filter(item => item.classList.contains('checked'));
-            if (checkedOptions.length === 0) {
-                selected.innerText = 'Choose skills';
+    menu.querySelectorAll('li').forEach(option => {
+        option.addEventListener('click', event => {
+            event.stopPropagation();
+
+            const clickedItem = event.currentTarget;
+
+            if (clickedItem.querySelector('ul')) {
+
+                const nextMenu = clickedItem.querySelector('ul');
+                nextMenu.classList.toggle('open2');
             } else {
-                const selectedText = checkedOptions.map(item => item.innerText).join(' , ');
-                selected.innerText = selectedText;
-            } 
-            caret.classList.toggle('caret-rotate');
-            menu.classList.toggle('menu-open');
+
+                clickedItem.classList.toggle('checked');
+
+                const checkedOptions = Array.from(menu.querySelectorAll('li')).filter(item => item.classList.contains('checked'));
+                if (checkedOptions.length === 0) {
+                    selected.innerText = 'CHOOSE SKILLS';
+                } else {
+                    const selectedText = checkedOptions.map(item => item.innerText).join(' , ');
+                    selected.innerText = selectedText;
+                }
+            }
         });
     });
 });
